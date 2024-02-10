@@ -50,10 +50,10 @@ export class TransactionService {
           ],
         },
       },
+      { $skip: skip },
       {
         $limit: limit,
       },
-      { $skip: skip },
     ]);
   }
 
