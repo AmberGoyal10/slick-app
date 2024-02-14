@@ -1,0 +1,7 @@
+docker run -p 5432:5432 \
+    --name postgres -d \
+    -e POSTGRES_PASSWORD=admin \
+    -e POSTGRES_USER=admin \
+    -e POSTGRES_DB=slick-app \
+    -v pgdata:/var/lib/postgresql/data \
+    postgres
