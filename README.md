@@ -71,3 +71,40 @@ Nest is an MIT-licensed open source project. It can grow thanks to the sponsors 
 ## License
 
 Nest is [MIT licensed](LICENSE).
+
+## DB setup
+
+## Create docker container for postgres
+
+```bash
+$ docker run -p 5432:5432 \
+ --name postgres -d \
+ -e POSTGRES_PASSWORD=admin \
+ -e POSTGRES_USER=admin \
+ -e POSTGRES_DB=slick-app \
+ -v pgdata:/var/lib/postgresql/data \
+ postgres
+
+$ psql slick-app -h localhost -U admin
+```
+
+## Setup database table
+
+```bash
+## Create transactions table
+$ CREATE TABLE transactions (TransactionID BIGINT, UserID VARCHAR(50), Amount DECIMAL, Timestamp TIMESTAMP);
+
+## Create index on table
+$ CREATE UNIQUE INDEX TransactionID ON transactions(TransactionID);
+$ CREATE INDEX UserID_Timestamp ON transactions(UserID, Timestamp);
+$ CREATE INDEX Amount ON transactions(Amount);
+
+## View indexes
+$ SELECT indexname FROM pg_indexes WHERE tablename = 'transactions';
+```
+
+## Dump data into table
+
+```bash
+$ psql slick-app -h localhost -U admin -f seed_data.sql
+```
